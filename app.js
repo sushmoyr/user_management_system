@@ -2,6 +2,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const userRouter = require('./servers/routes/user');
 
 require("dotenv").config();
 
@@ -22,18 +23,10 @@ app.engine('handlebars', handlebars.engine({ extname: '.handlebars' }));
 app.set('view engine', 'handlebars');
 
 
-//make sql connection pool
-const connection = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
+
 
 //Router
-app.get('/', (req, res) => {
-    res.render('home');
-});
+app.use(userRouter);
 
 
 
